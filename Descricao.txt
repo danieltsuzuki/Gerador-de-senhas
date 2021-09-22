@@ -1,0 +1,5 @@
+Gerar senha com caracteres maiúsculos, minúsculos, números e especiais.
+opção de tamanho da senha
+opção de quantidade de caracteres maiúsculos, minúsculos, números e especiais.
+salvar no banco de dados
+enviar por email
