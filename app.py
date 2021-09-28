@@ -49,17 +49,17 @@ class Gerador_de_senhas:
     def compara_checkbuttons(self):#compara as opções CHECKBUTTON com os tipos de caracteres e retorna uma nova lista apenas com os caracteres selecionados
         self.get_checkbuttons()
         self.caracteres = []
-        caracter_numericos = string.digits
-        caracter_especiais = string.punctuation
-        caracter_minusculas = string.ascii_lowercase
-        caracter_maiusculas = string.ascii_uppercase
-        tipos_caracter = [caracter_numericos, caracter_especiais, caracter_minusculas, caracter_maiusculas]
+        caracter_numericos = string.digits#caracteres númericos
+        caracter_especiais = string.punctuation#caracteres especiais
+        caracter_minusculas = string.ascii_lowercase#caracteres minusculos
+        caracter_maiusculas = string.ascii_uppercase#caracteres maiusculos
+        tipos_caracter = [caracter_numericos, caracter_especiais, caracter_minusculas, caracter_maiusculas]#lista que junta todos os caracteres
 
         for i in range(0,len(self.get_lista)):
-            if self.get_lista[i]==1:
-                self.caracteres.append(tipos_caracter[i])
+            if self.get_lista[i]==1:#comparando as opções marcadas no CHECKBUTTON
+                self.caracteres.append(tipos_caracter[i])#selecionando as opções marcadas no checkbutton e passando para outra lista
         self.caracteres = ''.join(self.caracteres)#concatena todos os tipos de caracteres selecionados em uma string
-        return self.caracteres
+        return self.caracteres#string com todas as opções de caracteres selecionado pelo usuario
         
 
     def gerar_senha(self):
