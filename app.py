@@ -1,5 +1,4 @@
 import random
-#import re
 import string
 from tkinter import IntVar
 from tkinter.constants import NUMERIC
@@ -21,6 +20,8 @@ class Gerador_de_senhas:
         self.gerar_senha()
         self.get = Label(self.frame, text = ('Senha:',self.senha), bg = '#820AD1', font = ('Arial',15, 'bold'), foreground = '#222222')
         self.get.place(relx = 0, rely = 0.65, relheight= 0.2, relwidth= 1)
+        #self.validar_senha()
+
         
     
     def get_checkbuttons(self):#Adiciona o valor 1 na lista para cada opção marcada no CHECKBUTTON e retorna a lista
@@ -47,69 +48,52 @@ class Gerador_de_senhas:
         
     
     def compara_checkbuttons(self):#compara as opções CHECKBUTTON com os tipos de caracteres e retorna uma nova lista apenas com os caracteres selecionados
-        self.get_checkbuttons()
+        
         self.caracteres = []
-        caracter_numericos = string.digits#caracteres númericos
-        caracter_especiais = string.punctuation#caracteres especiais
-        caracter_minusculas = string.ascii_lowercase#caracteres minusculos
-        caracter_maiusculas = string.ascii_uppercase#caracteres maiusculos
-        tipos_caracter = [caracter_numericos, caracter_especiais, caracter_minusculas, caracter_maiusculas]#lista que junta todos os caracteres
-
+        self.caracter_numericos = string.digits#caracteres númericos
+        self.caracter_especiais = string.punctuation #'?@!#$%&'#caracteres especiais
+        self.caracter_minusculas = string.ascii_lowercase#caracteres minusculos
+        self.caracter_maiusculas = string.ascii_uppercase#caracteres maiusculos
+        tipos_caracter = [self.caracter_numericos, self.caracter_especiais, self.caracter_minusculas, self.caracter_maiusculas]#lista que junta todos os caracteres
         for i in range(0,len(self.get_lista)):
             if self.get_lista[i]==1:#comparando as opções marcadas no CHECKBUTTON
                 self.caracteres.append(tipos_caracter[i])#selecionando as opções marcadas no checkbutton e passando para outra lista
         self.caracteres = ''.join(self.caracteres)#concatena todos os tipos de caracteres selecionados em uma string
-        return self.caracteres#string com todas as opções de caracteres selecionado pelo usuario
+        return self.caracteres, self.caracter_numericos, self.caracter_especiais, self.caracter_minusculas, self.caracter_maiusculas #string com todas as opções de caracteres selecionado pelo usuario
         
 
     def gerar_senha(self):
         self.senha = []
         self.variaveis()
-        for i in range(int(self.tamanho)):
+        contador = 0
+
+        if self.get_lista[0]==1:
+            keygen = random.choice(self.caracter_numericos)
+            self.senha.append(keygen)
+            contador+=1
+        if self.get_lista[1]==1:
+            keygen = random.choice(self.caracter_especiais)
+            self.senha.append(keygen)
+            contador+=1
+        if self.get_lista[2]==1:
+            keygen = random.choice(self.caracter_minusculas)
+            self.senha.append(keygen)
+            contador+=1
+        if self.get_lista[3]==1:
+            keygen = random.choice(self.caracter_maiusculas)
+            self.senha.append(keygen)
+            contador+=1
+        for i in range(contador,int(self.tamanho)):
             keygen = random.choice(self.caracteres)#keygen recebe os tipos de caracteres que sera escolhido randomicamente
             self.senha.append(keygen)#adiciona um caractere a lista
+        random.shuffle(self.senha)
         self.senha = "".join(self.senha)#trasnforma a lista em string, unindo todos os caracteres da senha
         print(self.senha)
         return self.senha
-
+        
 
 class Armazenar_senha:
     
     def salvar_senha(self):
         pass
 
-#a = Gerador_de_senhas()
-#a.compara_checkbuttons()
-"""
-caracter = [
-    'a','A','b','B','c','C','d','D','e','E','f','F',
-    'g','G','h','H','i','I','j','J','l','L','m','M','n','N','o','O','p','P','q','Q','r','R',
-    's','S','t','T','u','U','v','V','x','X','y','Y','w','W','z','Z','ç','Ç','1','2','3','4',
-    '5','6','7','8','9','0','!','@','#','$','%','&','*',',','.','?','/','=','+','-','_'
-    ]
-caracter_lower = ['a','b','c','d','e','f','g','h','i','j','l','m','n','o','p','q','r','s','t','u','v','x','z','y','w','ç']
-caracter_special = ['!','@','#','$','%','&','*',',','.','?','/','=','+','-','_']
-number = ['1','2','3','4','5','6','7','8','9','0']
-
-
-total_caracter = int(input('Quantos caracteres sua senha deve ter? '))
-#number_caracter = int(input('Quantos desses caracteres devem ser "números"?' ))
-#special_caracter = int(input('Quantos desses caracteres devem ser "caracter especial"?' ))
-#if number_caracter > total_caracter:
-    #print('ERRO, a quantidade de números é maior que a quantidade de caracteres da senha')
-#if caracter_special > (total_caracter - number_caracter):
-    #print('ERRO, a quantidade de caracteres especiais é maior que a quantidade de caracteres permitida')
-
-
-senha = []
-for i in range(total_caracter):# - number_caracter - special_caracter
-    keygen = random.choice(caracter)
-    senha.append(keygen)
-print(senha)
-#senha = list(senha)
-random.shuffle(senha)
-senha = str(senha).strip('[]').replace("'",'').replace(',','').replace(' ','')
-print(type(senha))
-print(senha)
-
-"""
